@@ -1,0 +1,79 @@
+*{
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+}
+
+#output{
+    resize: none;
+    border: 2px solid #000;
+    width: 100%;
+    user-select: none;
+}
+
+#input{
+    border: 2px solid #000;
+    width: 100%;
+}
+
+#send{
+    border: 2px solid #000;
+    user-select: none;
+    width: 75px;
+    height: 50px;
+}
+
+#send:active{
+    border: 2px solid #f00;
+}
+
+
+.eCol{
+	display: flex;
+	flex-direction: column;
+}
+
+.eRow{
+	display: flex;
+	flex-direction: row;
+}
+
+.eBetween{
+	justify-content: space-between;
+}
+
+.eAround{
+	justify-content: space-around;
+}
+
+.eCenter{
+	justify-content: center;
+}
+
+.eAlign{
+	align-items: center;
+}
+
+.eStart{
+	justify-content: flex-start;
+}
+
+.eEnd{
+	justify-content: flex-end;
+}
+
+.eWide{
+	width: 100%;
+}
+
+.eTall{
+	height: 100%;
+}
