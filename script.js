@@ -3,7 +3,7 @@ const server = "54.157.206.188";
 var lastMessageIndex = -1;	//Index of the latest message in the client's posession
 
 $("#send").click(postMessage);
-setInterval(getMessages, 1000);	//TODO: This is awful... but it works w/o server acknowledgement of clients
+setInterval(getMessages, 5000);	//TODO: This is awful... but it works w/o server acknowledgement of clients
 
 function writeMessages(json){
 	var o = $("#output");
