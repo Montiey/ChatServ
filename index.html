@@ -7,16 +7,22 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 	</head>
-	<body>
-		<div class="eCol eBetween eTall">
+	<body class="eCol">
+		<div id="container" class="eCol eBetween eGrow">
 			<div class="eRow eCenter eTall">
-				<textarea id="output"></textarea>
+				<textarea readonly id="output" class="eGrow"></textarea>
 			</div>
-			<div class="eRow eCenter">
+			<div id="infoContainer" class="eRow eCenter">
 				<div id="send" class="eRow eAlign eCenter">Send</div>
+				<div class="eCol eCenter">
+					<div class="eRow eCenter">
+						Username
+					</div>
+					<input type="text" id="name">
+				</div>
 			</div>
 			<div class="eRow eCenter eTall">
-				<textarea id="input"></textarea>
+				<textarea id="input" class="eGrow"></textarea>
 			</div>
 		</div>
 		<script type="text/javascript" src="script.js"></script>
