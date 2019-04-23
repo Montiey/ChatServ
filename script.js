@@ -20,7 +20,7 @@ function postMessage(){
     	return;
     }
     var req = new XMLHttpRequest();
-    req.open("POST", "https://cors-anywhere.herokuapp.com/" + server + "/postMessage");
+    req.open("POST", "http://" + server + "/postMessage");
     req.setRequestHeader("Content-Type", "application/json");
 
     content = {
@@ -42,7 +42,7 @@ function postMessage(){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", "https://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", "http://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
 	req.setRequestHeader("Content-Type", "application/json");
 
 	req.send();
