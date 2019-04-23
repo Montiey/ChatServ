@@ -8,8 +8,31 @@ getMessages();
 
 function writeMessages(json){
 	var o = $("#output");
+
 	for(var msg of json){
 		o.append("[" + msg.user + "] " + msg.content + "\n");
+	}
+
+	if(json.length && $("#autoscroll")[0].checked){
+		var o = $("#output");
+    	o.scrollTop(o[0].scrollHeight - o.height());
+	}
+}
+
+function getMessages(){
+	console.log("Getting...");
+	var req = new XMLHttpRequest();
+	req.open("POST", "http://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.setRequestHeader("Content-Type", "application/json");
+
+	req.send();
+
+	req.onreadystatechange = function(){
+		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+			var nextMessages = JSON.parse(this.response);
+			lastMessageIndex += nextMessages.length;
+			writeMessages(nextMessages);
+		}
 	}
 }
 
@@ -35,23 +58,7 @@ function postMessage(){
     	if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
     		console.log("Success sending message");
     		$("#input").val("");
+			getMessages();
     	}
     }
-}
-
-function getMessages(){
-	console.log("Getting...");
-	var req = new XMLHttpRequest();
-	req.open("POST", "http://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
-	req.setRequestHeader("Content-Type", "application/json");
-
-	req.send();
-
-	req.onreadystatechange = function(){
-		if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
-			var nextMessages = JSON.parse(this.response);
-			lastMessageIndex += nextMessages.length;
-			writeMessages(nextMessages);
-		}
-	}
 }

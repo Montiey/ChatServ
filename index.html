@@ -6,21 +6,24 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-		<base href="./">
 	</head>
 	<body class="eCol">
 		<div id="container" class="eCol eBetween eGrow">
 			<div class="eRow eCenter eTall">
 				<textarea readonly id="output" class="eGrow"></textarea>
 			</div>
-			<div id="infoContainer" class="eRow eCenter">
-				<div id="send" class="eRow eAlign eCenter">Send</div>
-				<div class="eCol eCenter">
-					<div class="eRow eCenter">
-						Username
-					</div>
+			<div id="infoContainer" class="eRow eAlign eAround">
+				<div class="eCol eCenter eAlign">
+					<div class="eRow eCenter">Autoscroll</div>
+					<input id="autoscroll" type="checkbox" checked>
+				</div>
+
+				<div class="eCol eCenter eAlign">
+					<div class="eRow eCenter">Username</div>
 					<input type="text" id="name">
 				</div>
+
+				<div id="send" class="eRow eAlign eCenter">Send</div>
 			</div>
 			<div class="eRow eCenter eTall">
 				<textarea id="input" class="eGrow"></textarea>

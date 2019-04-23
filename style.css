@@ -2,6 +2,8 @@
     border: 0px;
     margin: 0px;
     padding: 0px;
+
+	font-family: Arial;
 }
 
 html{
@@ -19,10 +21,13 @@ body{
 #output{
     resize: none;
     border: 2px solid #000;
+	padding: 10px;
 }
 
 #input{
+	resize: none;
     border: 2px solid #000;
+	padding: 10px;
 }
 
 #infoContainer{
@@ -30,20 +35,22 @@ body{
 }
 	#name{
 		border: 2px solid #000;
-		margin-left: 20px;
 	}
-	
+
 	#send{
 	    border: 2px solid #000;
 	    user-select: none;
 	    width: 75px;
 	    height: 50px;
 	}
-	
+
+	#autoscroll{
+
+	}
+
 	#send:active{
 	    border: 2px solid #f00;
 	}
-
 
 .eCol{
 	display: flex;
