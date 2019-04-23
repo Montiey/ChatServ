@@ -42,7 +42,7 @@ function postMessage(){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", "http://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
 	req.setRequestHeader("Content-Type", "application/json");
 
 	req.send();
