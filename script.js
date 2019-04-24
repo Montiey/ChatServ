@@ -22,7 +22,7 @@ function writeMessages(json){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", "http://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", "//" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
 	req.setRequestHeader("Content-Type", "application/json");
 
 	req.send();
@@ -43,7 +43,7 @@ function postMessage(){
     	return;
     }
     var req = new XMLHttpRequest();
-    req.open("POST", "http://" + server + "/postMessage");
+    req.open("POST", "//" + server + "/postMessage");
     req.setRequestHeader("Content-Type", "application/json");
 
     content = {
