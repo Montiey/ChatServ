@@ -1,4 +1,4 @@
-const server = "54.157.206.188:8787";
+const server = "54.157.206.188:443";
 
 var lastMessageIndex = -1;	//Index of the latest message in the client's posession
 
