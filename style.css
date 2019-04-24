@@ -3,6 +3,8 @@
     margin: 0px;
     padding: 0px;
 
+    font-size: 30px;
+
 	font-family: Arial;
 }
 
@@ -39,10 +41,15 @@ body{
 
 	#send{
 	    border: 2px solid #000;
-	    user-select: none;
-	    width: 75px;
-	    height: 50px;
+	    width: 150px;
+	    height: 100px;
 	}
+
+    #ssl{
+        border: 2px solid #000;
+	    width: 150px;
+	    height: 100px;
+    }
 
 	#autoscroll{
 
@@ -51,6 +58,18 @@ body{
 	#send:active{
 	    border: 2px solid #f00;
 	}
+
+.clickable{
+    user-select: none;
+    cursor: pointer;
+}
+.clickable:hover{
+
+}
+
+
+
+
 
 .eCol{
 	display: flex;

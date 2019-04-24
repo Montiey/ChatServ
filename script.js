@@ -1,10 +1,14 @@
-const server = "54.157.206.188";
+const server = "54.157.206.188:8787";
 
 var lastMessageIndex = -1;	//Index of the latest message in the client's posession
 
 $("#send").click(postMessage);
-setInterval(getMessages, 3000);	//TODO: This is awful... but it works w/o server acknowledgement of clients
+setInterval(getMessages, 3000);
 getMessages();
+
+$("#ssl").click(function(){
+	window.location = "https://" + server;
+});
 
 function writeMessages(json){
 	var o = $("#output");
@@ -22,7 +26,7 @@ function writeMessages(json){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", "//" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", "https://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
 	req.setRequestHeader("Content-Type", "application/json");
 
 	req.send();
@@ -43,7 +47,7 @@ function postMessage(){
     	return;
     }
     var req = new XMLHttpRequest();
-    req.open("POST", "//" + server + "/postMessage");
+    req.open("POST", "https://" + server + "/postMessage");
     req.setRequestHeader("Content-Type", "application/json");
 
     content = {
