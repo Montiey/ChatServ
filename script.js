@@ -7,7 +7,7 @@ setInterval(getMessages, 3000);
 getMessages();
 
 $("#ssl").click(function(){
-	window.location = "https://" + server;
+	window.location = "https://" + server + "/cert";
 });
 
 function writeMessages(json){
