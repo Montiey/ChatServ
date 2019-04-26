@@ -35,7 +35,8 @@ body{
 }
 
 #infoContainer{
-	margin: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 	#name{
 		border: 2px solid #000;
@@ -45,16 +46,6 @@ body{
 	    border: 2px solid #000;
 	    width: 150px;
 	    height: 100px;
-	}
-
-    #ssl{
-        border: 2px solid #000;
-	    width: 150px;
-	    height: 100px;
-    }
-
-	#autoscroll{
-
 	}
 
 	#send:active{

@@ -1,14 +1,10 @@
-const server = "54.157.206.188:443";
-
+const server = "montiey.xyz";
+const protocol = "http://";
 var lastMessageIndex = -1;	//Index of the latest message in the client's posession
 
 $("#send").click(postMessage);
 setInterval(getMessages, 3000);
 getMessages();
-
-$("#ssl").click(function(){
-	window.location = "https://" + server + "/cert";
-});
 
 function writeMessages(json){
 	var o = $("#output");
@@ -26,7 +22,7 @@ function writeMessages(json){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", "https://" + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", protocol + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
 	req.setRequestHeader("Content-Type", "application/json");
 
 	req.send();
@@ -47,7 +43,7 @@ function postMessage(){
     	return;
     }
     var req = new XMLHttpRequest();
-    req.open("POST", "https://" + server + "/postMessage");
+    req.open("POST", protocol + server + "/postMessage");
     req.setRequestHeader("Content-Type", "application/json");
 
     content = {

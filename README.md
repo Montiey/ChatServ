@@ -1,3 +1,3 @@
-# ChatServ
+ChatServ
 
-[montiey.github.io/ChatServ](https://montiey.github.io/ChatServ/)
+Montiey's Chat server (very bad)
