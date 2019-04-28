@@ -10,7 +10,10 @@ function writeMessages(json){
 	var o = $("#output");
 
 	for(var msg of json){
+		//o.append("<span class=\"nameText\">[" + msg.user + "]</span> " + msg.content + "\n");
+
 		o.append("[" + msg.user + "] " + msg.content + "\n");
+
 	}
 
 	if(json.length && $("#autoscroll")[0].checked){
