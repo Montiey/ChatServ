@@ -44,6 +44,7 @@ function postMessage(){
     }
     var req = new XMLHttpRequest();
     req.open("POST", protocol + server + "/postMessage");
+	req.setRequestHeader("content-type", "application/json");
 
     content = {
     	"content": $("#input").val(),
