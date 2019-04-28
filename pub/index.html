@@ -9,25 +9,26 @@
 	</head>
 	<body class="eCol">
 		<div id="container" class="eCol eBetween eGrow">
-			<div class="eRow eCenter eTall">
+			<div id="outputContainer" class="eGrow eRow roundable">
 				<textarea readonly id="output" class="eGrow roundable"></textarea>
 			</div>
+
 			<div id="infoContainer" class="eRow eAlign eBetween">
 				<div class="eCol eCenter eAlign roundable">
 					<div class="eRow eCenter">Autoscroll</div>
-					<input id="autoscroll" type="checkbox" checked>
+					<input id="autoscroll" type="checkbox" class="clickable" checked>
 				</div>
 
-			
-				<input type="text" id="name" placeholder="Name">
+				<input type="text" id="name" placeholder="Name" class="roundable">
 
-
-				<div id="send" class="eRow eAlign eCenter clickable roundable">Send</div>
+				<div id="send" class="eRow eTall eAlign eCenter clickable roundable">Send</div>
 			</div>
-			<div class="eRow eCenter eTall">
+
+			<div id="inputContainer" class=" eRow roundable">
 				<textarea id="input" class="eGrow roundable" placeholder="..."></textarea>
 			</div>
 		</div>
+
 		<script type="text/javascript" src="script.js"></script>
 	</body>
 </html>

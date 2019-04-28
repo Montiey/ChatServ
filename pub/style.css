@@ -3,12 +3,14 @@
 	margin: 0px;
 	padding: 0px;
 
-	font-size: 30px;
+	font-size: 25px;
 
 	font-family: Arial;
 
 	outline: none;
 	color: #fff;
+
+	user-select: none;
 }
 
 html{
@@ -20,53 +22,77 @@ body{
 	background-color: #000;
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #fff;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #55f;
+}
+
 #container{
 	margin: 30px;
 }
-
-#output{
-   	resize: none;
-   	border: 2px solid #fff;
-	background-color: #000;
-	padding: 10px;
-}
-
-#input{
-	resize: none;
-	border: 2px solid #fff;
-	background-color: #000;
-	padding: 10px;
-}
-
-#infoContainer{
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-	#name{
+	#outputContainer{
 		border: 2px solid #fff;
-		background-color: #000;
-		padding: 10px;
+		flex-grow: 6;
 	}
+		#output{
+		   	resize: none;
+			background-color: #333;
 
-	#send{
-		border: 2px solid #fff;
-		width: 150px;
+			margin: 10px;
+			padding: 10px;
+
+			overflow-y: scroll;
+		}
+
+	#inputContainer{
+		border: 2px solid #55f;
 		height: 100px;
 	}
+		#input{
+			resize: none;
+			background-color: #333;
 
-	#send:active{
-		border: 2px solid #55f;
+			margin: 10px;
+			padding: 10px;
+
+			overflow-y: scroll;
+		}
+
+	#infoContainer{
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
+		#name{
+			border: 2px solid #fff;
+			background-color: #000;
+			padding: 10px;
+		}
+		#send{
+			border: 2px solid #fff;
+			width: 150px;
+		}
+		#send:active{
+			border: 2px solid #55f;
+		}
+
+
+
+
 
 .clickable{
 	user-select: none;
 	cursor: pointer;
 }
-.clickable:hover{
-
-}
 .roundable{
-	border-radius: 20px;
+	border-radius: 10px;
 }
 
 .nameText{
@@ -75,48 +101,41 @@ body{
 
 
 
+
+
+
 .eCol{
 	display: flex;
 	flex-direction: column;
 }
-
 .eRow{
 	display: flex;
 	flex-direction: row;
 }
-
 .eBetween{
 	justify-content: space-between;
 }
-
 .eAround{
 	justify-content: space-around;
 }
-
 .eCenter{
 	justify-content: center;
 }
-
 .eAlign{
 	align-items: center;
 }
-
 .eStart{
 	justify-content: flex-start;
 }
-
 .eEnd{
 	justify-content: flex-end;
 }
-
-.eWide{
-	width: 100%;
-}
-
 .eTall{
 	height: 100%;
 }
-
+.eWide{
+	width: 100%;
+}
 .eGrow{
-	flex-grow: 999;
+	flex-grow: 1;
 }

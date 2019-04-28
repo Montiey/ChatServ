@@ -8,12 +8,11 @@ getMessages();
 
 function writeMessages(json){
 	var o = $("#output");
+	var temp = o.text();
 
 	for(var msg of json){
-		//o.append("<span class=\"nameText\">[" + msg.user + "]</span> " + msg.content + "\n");
-
-		o.append("[" + msg.user + "] " + msg.content + "\n");
-
+		temp += "[" + msg.user + "] " + msg.content.toString() + "\n";
+		o.text(temp);	//No cross-site scripting for you!
 	}
 
 	if(json.length && $("#autoscroll")[0].checked){
@@ -26,8 +25,7 @@ function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
 	req.open("POST", protocol + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
-	req.setRequestHeader("Content-Type", "application/json");
-
+	
 	req.send();
 
 	req.onreadystatechange = function(){
@@ -40,14 +38,12 @@ function getMessages(){
 }
 
 function postMessage(){
-    console.log("Sending...");
     if(!$("#input").val() || !$("#name").val()){
     	console.log("Blank fields");
     	return;
     }
     var req = new XMLHttpRequest();
     req.open("POST", protocol + server + "/postMessage");
-    req.setRequestHeader("Content-Type", "application/json");
 
     content = {
     	"content": $("#input").val(),
