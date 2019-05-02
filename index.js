@@ -1,4 +1,3 @@
-//const https = require("https");
 const http = require("http");
 const nStatic = require("node-static");
 const urlParser = require("url");
@@ -20,9 +19,7 @@ function getDate(){
 	return (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear();
 }
 
-
 const fServer = new nStatic.Server("./pub"); //Hot fresh HTML
-
 
 const requestHandler = function(request, response){
 	console.log(getDate() + " [" + request.connection.remoteAddress + "]" + request.url);
@@ -31,8 +28,7 @@ const requestHandler = function(request, response){
 
 	response.setHeader("access-control-allow-origin", "*");
 	response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
-	response.setHeader("access-control-allow-headers", "x-requested-with, content-type");	
-	
+	response.setHeader("access-control-allow-headers", "x-requested-with, content-type");
 
 	if(url.pathname == "/getMessages"){
 		var fromIndex = url.query.getFrom;
