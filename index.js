@@ -25,51 +25,56 @@ const fServer = new nStatic.Server("./pub"); //Hot fresh HTML
 
 
 const requestHandler = function(request, response){
-	console.log(getDate() + " [" + request.connection.remoteAddress + "]" + request.url);
+	console.log(getDate() + " [" + request.connection.remoteAddress + " T: " + request.headers["content-type"] + "]" + request.url);
 
-	var url = urlParser.parse(request.url, true);
+	try{
+		var url = urlParser.parse(request.url, true);
 
-	response.setHeader("access-control-allow-origin", "*");
-	response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
-	response.setHeader("access-control-allow-headers", "x-requested-with, content-type");	
-	
+		response.setHeader("access-control-allow-origin", "*");
+		response.setHeader("access-control-allow-methods", "GET, POST, OPTIONS");
+		response.setHeader("access-control-allow-headers", "x-requested-with, content-type");	
+		
 
-	if(url.pathname == "/getMessages"){
-		var fromIndex = url.query.getFrom;
-		var newMessages = messages.slice(fromIndex);
-		response.setHeader("content-type", "application/json");
-		response.write(JSON.stringify(newMessages));
-		response.end();
-	} else if(url.pathname == "/postMessage" && request.headers["content-type"] == "application/json"){
-		var content = "";
-		request.on("data", function(data){
-			content += data;
-			if(content.length > 1e6){
-				request.connection.destroy();
-				console.log("!!! Data overflow !!!");
-			} else{
-			}
-		});
-		request.on("end", function(){
-			console.log("Received msg: " + content);
-			var msg = null;
-			try{
-				msg = JSON.parse(content);
-			} catch(e){
-				console.log("JSON: " + e);
-			}
-
-			if(msg){
-				if(msg.user && msg.content){
-					messages.push(new Message(msg.user, msg.content));
+		if(url.pathname == "/getMessages"){
+			var fromIndex = url.query.getFrom;
+			var newMessages = messages.slice(fromIndex);
+			response.setHeader("content-type", "application/json");
+			response.write(JSON.stringify(newMessages));
+			response.end();
+		} else if(url.pathname == "/postMessage"){
+			var content = "";
+			request.on("data", function(data){
+				content += data;
+				if(content.length > 1e6){
+					request.connection.destroy();
+					console.log("!!! Data overflow !!!");
 				} else{
-					console.log("Ignoring blank");
 				}
-			}
-		});
-		response.end();
-	} else{
-		fServer.serve(request, response);
+			});
+			request.on("end", function(){
+				console.log("Received msg: " + content);
+				var msg = null;
+				try{
+					msg = JSON.parse(content);
+				} catch(e){
+					console.log("JSON: " + e);
+				}
+
+				if(msg){
+					if(msg.user && msg.content){
+						messages.push(new Message(msg.user, msg.content));
+					} else{
+						console.log("Ignoring blank");
+					}
+				}
+			});
+			response.end();
+		} else{
+			fServer.serve(request, response);
+		
+		}
+	} catch(e){
+		console.log("!!!!!!!! Couldn't respond to request: " + e);
 	}
 }
 
@@ -77,4 +82,8 @@ const requestHandler = function(request, response){
 const server = http.createServer(requestHandler);
 server.listen(port);
 
+
+process.on("SIGINT", () => {
+	console.log("SIGINT - restarting");
+});
 console.log("ChatServ started on port " + port);
