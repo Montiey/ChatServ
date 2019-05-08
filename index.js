@@ -5,16 +5,20 @@ const fs = require("fs");
 const jsonfile = require("jsonfile");
 
 const port = 80;
-const qrFile = "qrref.json";
-const messageFile = "messages.json";
+const qrFile = "config/qrref.json";
+const messageFile = "config/messages.json";
+const refFile = "config/ref.json"
 
 function getTimestamp(){
 	var d = new Date();
-	return (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear() + " " + (d.getHours() < 10 ? "0" + d.getHours() : d.getHours()) + ":" + (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes());
+	return (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear() + " " +
+	(d.getHours() < 10 ? "0" + d.getHours() : d.getHours()) + ":" +
+	(d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()) + ":" +
+	(d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds()
+);
 }
 
 function editJSON(path, callback){
-	path = "config/" + path;
 	var content;
 
 	if(fs.existsSync(path)){
@@ -29,12 +33,10 @@ function editJSON(path, callback){
 }
 
 function readJSON(path){
-	path = "config/" + path;
-	
 	if(fs.existsSync(path)){
 		return JSON.parse(fs.readFileSync(path));
 	} else{
-		console.log("Read: File doesn't exist");
+		console.log("Read: File doesn't exist: " + path);
 		return;
 	}
 }
@@ -43,7 +45,7 @@ function readJSON(path){
 const fServer = new nStatic.Server("./pub"); //Hot fresh HTML
 
 const requestHandler = function(request, response){
-	console.log(getTimestamp() + " [" + request.connection.remoteAddress + " T: " + request.headers["content-type"] + "]" + request.url);
+	console.log(getTimestamp() + " [" + request.connection.remoteAddress + " T: " + request.headers["content-type"] + "] " + request.url);
 
 	try{
 		var url = urlParser.parse(request.url, true);
@@ -85,7 +87,8 @@ const requestHandler = function(request, response){
 						editJSON(messageFile, function(json){
 							json.list.push({
 								user: msg.user,
-								content: msg.content
+								content: msg.content,
+								address: request.connection.remoteAddress
 							});
 						});
 					} else{
@@ -95,30 +98,30 @@ const requestHandler = function(request, response){
 			});
 			response.end();
 		} else{
-			if(url.query.ref == "qr"){		
-				editJSON(qrFile, function(json){
+			if(url.query.ref != undefined){		
+				editJSON(refFile, function(json){
 					var exists = false;
-					for(var entry of json.list){
-						console.log("Comparing " + entry.address + " - " + request.connection.remoteAdress);
+					console.log("Query: " + url.query.ref);
+					for(var entry of json[url.query.ref]){
 						if(entry.address == request.connection.remoteAddress){
-							exists = true;
 							entry.count++;
+							exists = true;
 							break;
 						}
 					}
 					if(!exists){
-						json.list.push({
+						json[url.query.ref].push({
 							address: request.connection.remoteAddress,
-							count: 0
+							count: 1
 						});
 					}
-					
 				});
 				response.writeHead(302, {
 					"location": url.pathname	//Remove query string
 				});
 				response.end();
 			} else{
+				console.log("Serving files");
 				fServer.serve(request, response);
 			}
 		}

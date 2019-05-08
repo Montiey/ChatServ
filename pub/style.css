@@ -2,9 +2,9 @@
 	border: 0px;
 	margin: 0px;
 	padding: 0px;
-	font-size: 25px;
 	font-family: "Roboto Mono";
 	outline: none;
+	font-size: 25px;
 	color: #fff;
 	user-select: none;
 }
@@ -34,6 +34,9 @@ body{
 #container{
 	margin: 30px;
 }
+	#titleContainer{
+		font-size: 35px;	
+	}
 	#outputContainer{
 		border: 2px solid #fff;
 		flex-grow: 6;
@@ -132,4 +135,7 @@ body{
 }
 .eGrow{
 	flex-grow: 1;
+}
+.eJustify{
+	text-align: center;
 }
