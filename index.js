@@ -2,7 +2,6 @@ const http = require("http");
 const nStatic = require("node-static");
 const urlParser = require("url");
 const fs = require("fs");
-const jsonfile = require("jsonfile");
 
 const port = 80;
 const qrFile = "config/qrref.json";
@@ -12,10 +11,19 @@ const refFile = "config/ref.json"
 function getTimestamp(){
 	var d = new Date();
 	return (d.getMonth() + 1) + "-" + d.getDate() + "-" + d.getFullYear() + " " +
-	(d.getHours() < 10 ? "0" + d.getHours() : d.getHours()) + ":" +
+	(d.getHours == 0 ? "12" : (d.getHours() < 10 ? "0" + d.getHours() : d.getHours())) + ":" +
 	(d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()) + ":" +
-	(d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds()
-);
+	(d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds());
+}
+
+function newMessage(name, content, address, time, type){
+	return {
+		name: name,
+		content: content,
+		address: address,
+		time: time,
+		type: type
+	};
 }
 
 function editJSON(path, callback){
@@ -59,9 +67,12 @@ const requestHandler = function(request, response){
 
 		if(url.pathname == "/getMessages"){
 			var fromIndex = url.query.getFrom;
-			var newMessages = readJSON(messageFile).list.slice(fromIndex);
+			var readMessages = readJSON(messageFile).list.slice(fromIndex);
+			for(var msg of readMessages){	//strip all other data but what the client should get
+				delete msg.address
+			}
 			response.setHeader("content-type", "application/json");
-			response.write(JSON.stringify(newMessages));
+			response.write(JSON.stringify(readMessages));
 			response.end();
 		} else if(url.pathname == "/postMessage"){
 			var content = "";
@@ -84,12 +95,8 @@ const requestHandler = function(request, response){
 
 				if(msg){
 					if(msg.user && msg.content){
-						editJSON(messageFile, function(json){
-							json.list.push({
-								user: msg.user,
-								content: msg.content,
-								address: request.connection.remoteAddress
-							});
+						editJSON(messageFile, function(json){	
+							json.list.push(newMessage(msg.user, msg.content, request.connection.remoteAddress, (new Date).getTime(), "person"));
 						});
 					} else{
 						console.log("Ignoring blank");
@@ -115,7 +122,14 @@ const requestHandler = function(request, response){
 							count: 1
 						});
 					}
+					
 				});
+
+				editJSON(messageFile, function(json){
+					json.list.push(newMessage(null, "Someone just scanned a QR code! Say hi!", null, null, "info"));
+				});
+
+				
 				response.writeHead(302, {
 					"location": url.pathname	//Remove query string
 				});
