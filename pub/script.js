@@ -1,5 +1,3 @@
-const server = "54.157.206.188";
-const protocol = "http://";
 const getDelay = 3000;
 var getInterval = setInterval(getMessages, 3000);
 var lastMessageIndex = -1;	//Index of the latest message in the client's posession
@@ -11,7 +9,7 @@ function getTime(epoch){
 	d.setTime(epoch);
 	var mins = d.getMinutes();
 	var hours = d.getHours()%12;
-	return (hours < 10 ? "0" + hours : hours) + ":" + (mins < 10 ? "0" + mins : (mins == 0 ? "12" : mins));
+	return (hours == 0 ? "12" : (hours < 10 ? "0" + hours : hours)) + ":" + (mins < 10 ? "0" + mins : (mins == 0 ? "12" : mins));
 }
 
 function writeMessages(json){
@@ -38,7 +36,7 @@ function writeMessages(json){
 function getMessages(){
 	console.log("Getting...");
 	var req = new XMLHttpRequest();
-	req.open("POST", protocol + server + "/getMessages?getFrom=" + (lastMessageIndex + 1));
+	req.open("POST", "getMessages?getFrom=" + (lastMessageIndex + 1));
 	
 	req.send();
 
@@ -58,7 +56,7 @@ function postMessage(){
     	return;
     }
     var req = new XMLHttpRequest();
-    req.open("POST", protocol + server + "/postMessage");
+    req.open("POST", "postMessage");
 	req.setRequestHeader("content-type", "application/json");
 
     content = {
@@ -73,7 +71,7 @@ function postMessage(){
     	if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
     		console.log("Success sending message");
     		$("#input").val("");
-			getMessages();
+		getMessages();
 		getInterval = setInterval(getMessages, getDelay);
     	}
     }

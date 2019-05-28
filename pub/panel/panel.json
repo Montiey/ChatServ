@@ -1,0 +1,36 @@
+{
+	"templateTags": [
+		{
+			"tag": "{{URL}}",
+			"value": "/chat/"
+		},
+		{
+			"tag": "{{BANNERCOLOR}}",
+			"value": "#00f"
+		},
+		{
+			"tag": "{{BANNERTEXTCOLOR}}",
+			"value": "#fff"
+		},
+		{
+			"tag": "{{BANNERTEXT}}",
+			"value": "ChatServ"
+		},
+		{
+			"tag": "{{BODYCOLOR}}",
+			"value": "#555"
+		},
+		{
+			"tag": "{{BODYTEXTCOLOR}}",
+			"value": "#fff"
+		},
+		{
+			"tag": "{{BODYTEXT}}",
+			"value": "HTTP GET-POST based message board"
+		},
+		{
+			"tag": "{{REPOSITORYURL}}",
+			"value": "http://github.com/Montiey/ChatServ"
+		}
+	]
+}

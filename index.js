@@ -3,7 +3,7 @@ const nStatic = require("node-static");
 const urlParser = require("url");
 const fs = require("fs");
 
-const port = 80;
+const port = 8001;
 const qrFile = "config/qrref.json";
 const messageFile = "config/messages.json";
 const refFile = "config/ref.json"
@@ -78,31 +78,32 @@ const requestHandler = function(request, response){
 			var content = "";
 			request.on("data", function(data){
 				content += data;
-				if(content.length > 1e6){
+				if(content.length > 500){
 					request.connection.destroy();
 					console.log("!!! Data overflow !!!");
 				} else{
-				}
-			});
-			request.on("end", function(){
-				console.log("Received msg: " + content);
-				var msg = null;
-				try{
-					msg = JSON.parse(content);
-				} catch(e){
-					console.log("JSON: " + e);
-				}
+					request.on("end", function(){
+						console.log("Received msg: " + content);
+						var msg = null;
+						try{
+							msg = JSON.parse(content);
+						} catch(e){
+							console.log("JSON: " + e);
+						}
 
-				if(msg){
-					if(msg.user && msg.content){
-						editJSON(messageFile, function(json){	
-							json.list.push(newMessage(msg.user, msg.content, request.connection.remoteAddress, (new Date).getTime(), "person"));
-						});
-					} else{
-						console.log("Ignoring blank");
-					}
+						if(msg){
+							if(msg.user && msg.content){
+								editJSON(messageFile, function(json){	
+									json.list.push(newMessage(msg.user, msg.content, request.connection.remoteAddress, (new Date).getTime(), "person"));
+								});
+							} else{
+								console.log("Ignoring blank");
+							}
+						}
+					});
 				}
 			});
+			
 			response.end();
 		} else{
 			if(url.query.ref != undefined){		
